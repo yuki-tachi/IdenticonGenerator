@@ -1,12 +1,16 @@
-import React, { useEffect } from 'react';
 import logo from './logo.svg';
+import {useState, useEffect} from 'react';
 import './App.css';
+
+// components
 import Division from './components/Division';
 import Result from './components/Result';
 import Svg from './components/Svg';
 import Shape from './components/Shape';
 import ChangePattern from './components/ChangePattern';
-import {useState} from 'react';
+import ColorPick from './components/ColorPick';
+
+
 import {GetDrawSvg, IDrawableSvg, Rect, Circle} from './Svg';
 import Generate from './Pattern';
 
@@ -17,21 +21,26 @@ function App() {
   const [shape, setShape] = useState<IDrawableSvg>(initRect);
   const [svg, setSvg] = useState<string>("");
   const [division, setDivision] = useState<number>(5);
-  const [pattern, setPattern] = useState<boolean[][]>([[false]]);
+  const [pattern, setPattern] = useState<boolean[][]>(Generate(5));
+  const [color, setColor] = useState('#B30F3A');
 
+  // 初回一回のみ呼び出すタイミングで実行される、初期表示用
   useEffect(() => {
-    console.log("division or pattern");
-
     shape.setSize(division);
     setSvg(GetDrawSvg(pattern, shape));
-  },[division, pattern]);
+  },[]);
 
   useEffect(() => {
-    console.log("shape："+division);
-
+    shape.fill = color;
     shape.setSize(division);
+
     setSvg(GetDrawSvg(pattern, shape));
-  },[shape]);
+  },[division, pattern, shape]);
+
+  useEffect(() => {
+    shape.fill = color;
+    setSvg(GetDrawSvg(pattern, shape));
+  },[color]);
 
   const handleDivision = (division: number) => {
     setDivision(division);
@@ -39,7 +48,6 @@ function App() {
   };
 
   const handleShape = (shapeType:string) => {
-    // console.log(shapeType)
     let currentShape:IDrawableSvg;
     switch (shapeType) {
       case "rect":
@@ -57,24 +65,24 @@ function App() {
   };
 
   const handleChange = () => {
-    console.log("handleChange");
     setPattern(Generate(division));
-  }
+  };
 
   return (
     <div className="App">
       <header className="App-header">
-        {/* <img src={logo} className="App-logo" alt="logo" /> */}
         <h1>Identicon Generator</h1>
 
         <Svg svg={svg}/>
-        <Division handleDivision={handleDivision}/>
+        <Division division={division} handleDivision={handleDivision}/>
         <Shape handleShape={handleShape}/>
         <ChangePattern handleChange={handleChange}/>
-        <Result division={division} />
-        <p>
+        {/* <Result division={division} /> */}
+        <ColorPick color={color} handleColor={(e) => {setColor(e.target.value)}}/>
+
+        {/* <p>
           Edit <code>src/App.tsx</code> and save to reload.
-        </p>
+        </p> */}
       </header>
     </div>
   );

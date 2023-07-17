@@ -1,4 +1,5 @@
 interface IDrawableSvg {
+    fill:string;
     draw(): SVGElement;
     setSize(division:number): void;
     setPos(x:number, y:number): void;
@@ -8,14 +9,14 @@ class Rect implements IDrawableSvg {
     private size: number = 0;
     private x: number = 0;
     private y: number = 0;
-    private fill: string =  "#B30F3A";
+    fill: string =  "#B30F3A";
 
     draw(): SVGElement {
         const rectElement = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
         rectElement.setAttribute("x", `${Math.floor((this.x * this.size) * 100) / 100}`);
         rectElement.setAttribute("y", `${Math.floor((this.y * this.size) * 100) / 100}`);
-        rectElement.setAttribute("width", `${this.size}`);
-        rectElement.setAttribute("height", `${this.size}`);
+        rectElement.setAttribute("width", `${this.size + 0.2}`);
+        rectElement.setAttribute("height", `${this.size + 0.2}`);
         rectElement.setAttribute("fill", `${this.fill}`);
 
         return rectElement;
@@ -35,7 +36,7 @@ class Circle implements IDrawableSvg {
     private size: number = 0;
     private x: number = 0;
     private y: number = 0;
-    private fill: string =  "#B30F3A";
+    fill: string =  "#B30F3A";
 
     draw(): SVGElement {
         const circleElement = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
