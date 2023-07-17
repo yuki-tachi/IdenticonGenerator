@@ -1,3 +1,8 @@
+<img width="782" alt="スクリーンショット 2023-07-17 21 46 58" src="https://github.com/yuki-tachi/IdenticonGenerator/assets/43042148/812fde17-e066-4478-ae03-c31ca48108aa">
+
+[DEMO](https://yuki-tachi.github.io/IdenticonGenerator/build/)
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
