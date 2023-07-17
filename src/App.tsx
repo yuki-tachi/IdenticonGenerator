@@ -1,14 +1,14 @@
-import logo from './logo.svg';
 import {useState, useEffect} from 'react';
 import './App.css';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Paper from '@mui/material/Paper';
 import { styled } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
 
 // components
 import Division from './components/Division';
-import Result from './components/Result';
 import Svg from './components/Svg';
 import Shape from './components/Shape';
 import ChangePattern from './components/ChangePattern';
@@ -70,6 +70,11 @@ function App() {
     setPattern(Generate(division));
   };
 
+  // クリップボードにコピーするコード
+  const copyToClipboard = async () => {
+    await global.navigator.clipboard.writeText(svg);
+  };
+
   const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -84,25 +89,16 @@ function App() {
         <h1>Identicon Generator</h1>
         <Svg svg={svg}/>
         <Box sx={{ flexGrow: 1 }}>
-          <Stack direction={'row'} spacing={2}>
-            {/* <Item> */}
+          <Stack direction={'row'} spacing={1}>
               <Division division={division} handleDivision={handleDivision}/>
-            {/* </Item> */}
-            {/* <Item> */}
               <Shape handleShape={handleShape}/>
-            {/* </Item> */}
-            {/* <Item> */}
               <ColorPick color={color} handleColor={(e) => {setColor(e.target.value)}}/>
-            {/* </Item> */}
-            {/* <Item> */}
               <ChangePattern handleChange={handleChange}/>
-            {/* </Item> */}
+              <Tooltip className='' title="Copy to Clipboard" placement="top" arrow>
+                <Button variant='outlined' onClick={() => copyToClipboard()}>Copy</Button>
+              </Tooltip>
           </Stack>
         </Box>
-
-        {/* <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p> */}
       </header>
     </div>
   );
