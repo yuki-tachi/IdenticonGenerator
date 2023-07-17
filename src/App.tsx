@@ -1,6 +1,10 @@
 import logo from './logo.svg';
 import {useState, useEffect} from 'react';
 import './App.css';
+import Box from '@mui/material/Box';
+import Stack from '@mui/material/Stack';
+import Paper from '@mui/material/Paper';
+import { styled } from '@mui/material/styles';
 
 // components
 import Division from './components/Division';
@@ -10,12 +14,10 @@ import Shape from './components/Shape';
 import ChangePattern from './components/ChangePattern';
 import ColorPick from './components/ColorPick';
 
-
 import {GetDrawSvg, IDrawableSvg, Rect, Circle} from './Svg';
 import Generate from './Pattern';
 
 function App() {
-  // let currentShape:IDrawableSvg = new Rect();
   const initRect = new Rect();
   initRect.setSize(5)
   const [shape, setShape] = useState<IDrawableSvg>(initRect);
@@ -68,17 +70,35 @@ function App() {
     setPattern(Generate(division));
   };
 
+  const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  }));
+
   return (
     <div className="App">
       <header className="App-header">
         <h1>Identicon Generator</h1>
-
         <Svg svg={svg}/>
-        <Division division={division} handleDivision={handleDivision}/>
-        <Shape handleShape={handleShape}/>
-        <ChangePattern handleChange={handleChange}/>
-        {/* <Result division={division} /> */}
-        <ColorPick color={color} handleColor={(e) => {setColor(e.target.value)}}/>
+        <Box sx={{ flexGrow: 1 }}>
+          <Stack direction={'row'} spacing={2}>
+            {/* <Item> */}
+              <Division division={division} handleDivision={handleDivision}/>
+            {/* </Item> */}
+            {/* <Item> */}
+              <Shape handleShape={handleShape}/>
+            {/* </Item> */}
+            {/* <Item> */}
+              <ColorPick color={color} handleColor={(e) => {setColor(e.target.value)}}/>
+            {/* </Item> */}
+            {/* <Item> */}
+              <ChangePattern handleChange={handleChange}/>
+            {/* </Item> */}
+          </Stack>
+        </Box>
 
         {/* <p>
           Edit <code>src/App.tsx</code> and save to reload.

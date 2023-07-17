@@ -5,10 +5,11 @@ type ColorPickPropsType = {
 
 const ColorPick = (props: ColorPickPropsType) => {
     return (
-        <>
-            <label htmlFor="color">Color</label>
+        <div>
+            {/* <label htmlFor="color" style={{marginRight: "8px"}}>Color</label> */}
             <input type="color" id="color" name="color" onChange={props.handleColor} value={props.color}/>
-        </>
+            <label htmlFor="color"> {props.color}</label>
+        </div>
     )
 }
 

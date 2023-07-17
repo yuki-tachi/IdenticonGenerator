@@ -1,10 +1,12 @@
+import Button from '@mui/material/Button';
+
 type ChangePatternPropsType = {
     handleChange:() => void
 }
 
 const ChangePattern = (props:ChangePatternPropsType) => {
     return (
-        <button type="button" onClick={props.handleChange}>Change Pattern</button>
+        <Button variant='outlined' onClick={props.handleChange}>Change Pattern</Button>
     )
 }
 

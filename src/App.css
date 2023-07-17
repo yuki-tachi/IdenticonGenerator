@@ -14,14 +14,16 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  /* background-color: #282c34; */
+  /* background-color: #e3e0d9; */
+  background: linear-gradient(-225deg, #cbf0f0 0%, #dbdade 56%, #ffdee2 100%);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: rgb(40, 40, 40);
 }
 
 .App-link {
@@ -32,15 +34,18 @@
   width: 40vw;
   height: 40vw;
   outline: solid 4px #bdbdbd;
+  background-color: white;
 }
 
 .favicon-code {
-  width: 90vw;
+  width: 80vw;
+  padding: 4px;
   height: 120px;
   overflow: scroll;
   overflow-x: hidden;
   text-align: left;
   font-size: 12px;
+  background-color: white;
 }
 
 @keyframes App-logo-spin {
