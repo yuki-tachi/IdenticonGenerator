@@ -69,8 +69,16 @@ function App() {
   };
 
   // クリップボードにコピーするコード
-  const copyToClipboard = async () => {
-    await global.navigator.clipboard.writeText(svg);
+  // const copyToClipboard = async () => {
+  //   await global.navigator.clipboard.writeText(svg);
+  // };
+
+  const downloadSvg = async () => {
+    const svgDataUrl = 'data:image/svg+xml;base64,' + btoa(svg);
+    const link = document.createElement('a');
+    link.href = svgDataUrl;
+    link.download = 'favicon.svg';
+    link.click();
   };
 
   return (
@@ -84,8 +92,11 @@ function App() {
               <Shape handleShape={handleShape}/>
               <ColorPick color={color} handleColor={(e) => {setColor(e.target.value)}}/>
               <ChangePattern handleChange={handleChange}/>
-              <Tooltip className='' title="Copy to Clipboard" placement="top" arrow>
+              {/* <Tooltip className='' title="Copy to Clipboard" placement="top" arrow>
                 <Button variant='outlined' onClick={() => copyToClipboard()}>Copy</Button>
+              </Tooltip> */}
+              <Tooltip title="DownLoad SVG" placement="top" arrow>
+                <Button variant='outlined' onClick={() => downloadSvg()}>DownLoad</Button>
               </Tooltip>
           </Stack>
         </Box>
