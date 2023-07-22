@@ -15,32 +15,44 @@ import ColorPick from './components/ColorPick';
 import {GetDrawSvg, IDrawableSvg, Rect, Circle} from './Svg';
 import Generate from './Pattern';
 
+const TITLE = "Identicon Generator";
+const DEFAULT_DIVISION: number = 5;
+
+function GetDrawSvgStr(pattern:boolean[][], shape:IDrawableSvg): string {
+  const svgStr = GetDrawSvg(pattern, shape);
+    
+  // ファビコンを変更
+    const linkIcon = document.querySelector<HTMLLinkElement>("link[rel*='icon']");
+    if(linkIcon){
+        linkIcon.href = 'data:image/svg+xml;base64,' + btoa(svgStr);
+    }
+
+  return svgStr;
+}
+
 function App() {
   const initRect = new Rect();
-  initRect.setSize(5)
+  initRect.setSize(DEFAULT_DIVISION)
   const [shape, setShape] = useState<IDrawableSvg>(initRect);
   const [svg, setSvg] = useState<string>("");
-  const [division, setDivision] = useState<number>(5);
-  const [pattern, setPattern] = useState<boolean[][]>(Generate(5));
+  const [division, setDivision] = useState<number>(DEFAULT_DIVISION);
+  const [pattern, setPattern] = useState<boolean[][]>(Generate(DEFAULT_DIVISION));
   const [color, setColor] = useState('#B30F3A');
 
   // 初回一回のみ呼び出すタイミングで実行される、初期表示用
   useEffect(() => {
+    document.title = TITLE;
     shape.setSize(division);
-    setSvg(GetDrawSvg(pattern, shape));
+    const svgStr = GetDrawSvgStr(pattern, shape);
+    setSvg(svgStr);
   },[]);
 
   useEffect(() => {
     shape.fill = color;
     shape.setSize(division);
 
-    setSvg(GetDrawSvg(pattern, shape));
-  },[division, pattern, shape]);
-
-  useEffect(() => {
-    shape.fill = color;
-    setSvg(GetDrawSvg(pattern, shape));
-  },[color]);
+    setSvg(GetDrawSvgStr(pattern, shape));
+  },[division, pattern, shape, color]);
 
   const handleDivision = (division: number) => {
     setDivision(division);
@@ -73,7 +85,7 @@ function App() {
   //   await global.navigator.clipboard.writeText(svg);
   // };
 
-  const downloadSvg = async () => {
+  const downloadSvg = () => {
     const svgDataUrl = 'data:image/svg+xml;base64,' + btoa(svg);
     const link = document.createElement('a');
     link.href = svgDataUrl;
