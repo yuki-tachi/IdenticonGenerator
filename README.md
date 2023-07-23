@@ -8,4 +8,4 @@ Githubで初期に自動生成される、インベーダーの敵の様なユ�
 
 # Demo
 Visit playground
-[DEMO](https://yuki-tachi.github.io/IdenticonGenerator/build/)
+[DEMO](https://yuki-tachi.github.io/IdenticonGenerator/)
