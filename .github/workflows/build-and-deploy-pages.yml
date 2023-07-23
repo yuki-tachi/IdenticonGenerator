@@ -1,4 +1,4 @@
-name: Build and deploy website
+name: Build and deploy pages
 
 on:
   push:
@@ -15,6 +15,8 @@ jobs:
         node-version: 18.x
     - name: Install NPM packages
       run: npm ci
+    - name: Setup babel
+      run: npm install --save-dev @babel/plugin-proposal-private-property-in-object
     - name: Build website
       run: npm run build --if-present
     - name: Deploy website
