@@ -7,16 +7,23 @@ import Tooltip from '@mui/material/Tooltip';
 
 // components
 import Division from './components/Division';
-import Svg from './components/Svg';
 import Shape from './components/Shape';
 import ChangePattern from './components/ChangePattern';
 import ColorPick from './components/ColorPick';
 
 import {GetDrawSvg, IDrawableSvg, Rect, Circle} from './Svg';
 import Generate from './Pattern';
+import Favicon from './components/Favicon';
+
+import Typography from '@mui/material/Typography';
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+/>
 
 const TITLE = "Identicon Generator";
 const DEFAULT_DIVISION: number = 5;
+const FILE_NAME = "favicon.svg";
 
 function GetDrawSvgStr(pattern:boolean[][], shape:IDrawableSvg): string {
   const svgStr = GetDrawSvg(pattern, shape);
@@ -45,7 +52,7 @@ function App() {
     shape.setSize(division);
     const svgStr = GetDrawSvgStr(pattern, shape);
     setSvg(svgStr);
-  },[]);
+  }, []);
 
   useEffect(() => {
     shape.fill = color;
@@ -89,30 +96,43 @@ function App() {
     const svgDataUrl = 'data:image/svg+xml;base64,' + btoa(svg);
     const link = document.createElement('a');
     link.href = svgDataUrl;
-    link.download = 'favicon.svg';
+    link.download = FILE_NAME;
     link.click();
   };
 
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Identicon Generator</h1>
-        <Svg svg={svg}/>
-        <Box sx={{ flexGrow: 1 }}>
-          <Stack direction={'row'} spacing={1}>
-              <Division division={division} handleDivision={handleDivision}/>
-              <Shape handleShape={handleShape}/>
-              <ColorPick color={color} handleColor={(e) => {setColor(e.target.value)}}/>
+        <Typography color="#404040" variant="h2">Identicon Generator</Typography>
+
+        <Box sx={{
+            display: 'flex',
+            justifyContent:'center',
+            "@media screen and (max-width:768px)": {
+              flexDirection: 'column',
+          },
+        }}>
+
+          <Stack sx={{alignItems: 'center', padding:'12px'}} direction={'column'} mb={2} spacing={2}>
+            <Favicon svg={svg}/>
               <ChangePattern handleChange={handleChange}/>
-              {/* <Tooltip className='' title="Copy to Clipboard" placement="top" arrow>
-                <Button variant='outlined' onClick={() => copyToClipboard()}>Copy</Button>
-              </Tooltip> */}
               <Tooltip title="DownLoad SVG" placement="top" arrow>
                 <Button variant='outlined' onClick={() => downloadSvg()}>DownLoad</Button>
               </Tooltip>
           </Stack>
+
+          <Box sx={{padding:'12px'}}>
+            <Stack sx={{justifyContent:'center', alignItems:'center'}} direction={'row'} spacing={2}>
+                <Division division={division} handleDivision={handleDivision}/>
+                <Shape handleShape={handleShape}/>
+                <ColorPick color={color} handleColor={(e) => {setColor(e.target.value)}}/>
+
+                {/* <Tooltip className='' title="Copy to Clipboard" placement="top" arrow>
+                  <Button variant='outlined' onClick={() => copyToClipboard()}>Copy</Button>
+                </Tooltip> */}
+            </Stack>
+          </Box>
+
         </Box>
-      </header>
     </div>
   );
 }

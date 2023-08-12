@@ -30,26 +30,6 @@
   color: #61dafb;
 }
 
-.favicon-128 {
-  width: 128px;
-  height: 128px;
-}
-
-.favicon-64 {
-  width: 64px;
-  height: 64px;
-}
-
-.favicon-32 {
-  width: 32px;
-  height: 32px;
-}
-
-.favicon-frame {
-  outline: solid 4px #bdbdbd;
-  background-color: white;
-}
-
 .favicon-code {
   width: 80vw;
   padding: 4px;
